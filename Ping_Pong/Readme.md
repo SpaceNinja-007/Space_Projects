@@ -12,7 +12,6 @@ You can use this space to develop, document, and experiment with your own versio
 - `index.html` — Main game page
 - `style.css` — Game styling
 - `script.js` — Game logic
-- `assets/` — Images, sounds, etc.
 
 ## How to Start
 
