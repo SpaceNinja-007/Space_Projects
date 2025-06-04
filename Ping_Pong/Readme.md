@@ -21,3 +21,10 @@ You can use this space to develop, document, and experiment with your own versio
 ---
 
 Have fun coding your own Ping Pong game! 🏓
+
+
+# Release Notes
+
+0.0 Game files released
+
+0.10 added arrow keys
