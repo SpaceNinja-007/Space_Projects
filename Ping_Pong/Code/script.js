@@ -123,14 +123,29 @@ function gameLoop() {
 // Controls for left paddle (Player 1, Green)
 window.addEventListener('keydown', e => {
   switch (e.key) {
-    // Left paddle: W/S
-    case 'w': leftPaddle.speed = -6; break;
-    case 's': leftPaddle.speed = 6; break;
+    // Left paddle: W/S or ArrowUp/ArrowDown
+    case 'w':
+    case 'W':
+    case 'ArrowUp':
+      leftPaddle.speed = -6;
+      break;
+    case 's':
+    case 'S':
+    case 'ArrowDown':
+      leftPaddle.speed = 6;
+      break;
   }
 });
 window.addEventListener('keyup', e => {
   switch (e.key) {
-    case 'w': case 's': leftPaddle.speed = 0; break;
+    case 'w':
+    case 'W':
+    case 's':
+    case 'S':
+    case 'ArrowUp':
+    case 'ArrowDown':
+      leftPaddle.speed = 0;
+      break;
   }
 });
 
