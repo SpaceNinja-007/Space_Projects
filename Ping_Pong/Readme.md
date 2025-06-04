@@ -2,6 +2,8 @@
 
 Welcome to the Ping Pong project!
 
+Thanks to Copilot AI,
+
 This folder contains all the files related to a simple Ping Pong web game.  
 You can use this space to develop, document, and experiment with your own version of the classic game.
 
