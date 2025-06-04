@@ -4,7 +4,7 @@ const ctx = canvas.getContext('2d');
 // Game objects
 const paddleHeight = 80, paddleWidth = 12, ballSize = 12;
 const leftPaddle = { x: 10, y: canvas.height/2 - paddleHeight/2, speed: 0 };
-const rightPaddle = { x: canvas.width - paddleWidth - 10, y: canvas.height/2 - paddleHeight/2, speed: 0 };
+const rightPaddle = { x: canvas.width - paddleWidth - 10, y: canvas.height/2 - paddleHeight/2, speed: 0, ai: true };
 const ball = { x: canvas.width/2, y: canvas.height/2, vx: 5, vy: 2, size: ballSize };
 
 let leftScore = 0, rightScore = 0;
@@ -38,7 +38,22 @@ function resetBall() {
 function update() {
   // Move paddles
   leftPaddle.y += leftPaddle.speed;
-  rightPaddle.y += rightPaddle.speed;
+
+  // AI for right paddle (Player 2, Red)
+  if (rightPaddle.ai) {
+    // Simple AI: move towards the ball, with max speed
+    const centerPaddle = rightPaddle.y + paddleHeight / 2;
+    if (centerPaddle < ball.y) {
+      rightPaddle.speed = 4;
+    } else if (centerPaddle > ball.y + ball.size) {
+      rightPaddle.speed = -4;
+    } else {
+      rightPaddle.speed = 0;
+    }
+    rightPaddle.y += rightPaddle.speed;
+  } else {
+    rightPaddle.y += rightPaddle.speed;
+  }
 
   // Prevent paddles from going out of bounds
   leftPaddle.y = Math.max(Math.min(leftPaddle.y, canvas.height - paddleHeight), 0);
@@ -52,14 +67,14 @@ function update() {
   if (ball.y < 0 || ball.y > canvas.height - ball.size) ball.vy *= -1;
 
   // Paddle collision
-  // Left paddle
+  // Left paddle (Player 1, Green)
   if (ball.x < leftPaddle.x + paddleWidth &&
       ball.y + ball.size > leftPaddle.y &&
       ball.y < leftPaddle.y + paddleHeight) {
     ball.vx *= -1.1;
     ball.x = leftPaddle.x + paddleWidth;
   }
-  // Right paddle
+  // Right paddle (Player 2, Red)
   if (ball.x + ball.size > rightPaddle.x &&
       ball.y + ball.size > rightPaddle.y &&
       ball.y < rightPaddle.y + paddleHeight) {
@@ -88,8 +103,8 @@ function render() {
   }
 
   // Paddles
-  drawRect(leftPaddle.x, leftPaddle.y, paddleWidth, paddleHeight, '#0ef');
-  drawRect(rightPaddle.x, rightPaddle.y, paddleWidth, paddleHeight, '#f0e');
+  drawRect(leftPaddle.x, leftPaddle.y, paddleWidth, paddleHeight, '#0f0'); // Green
+  drawRect(rightPaddle.x, rightPaddle.y, paddleWidth, paddleHeight, '#f00'); // Red
 
   // Ball
   drawCircle(ball.x + ball.size/2, ball.y + ball.size/2, ball.size/2);
@@ -105,21 +120,17 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 
-// Controls
+// Controls for left paddle (Player 1, Green)
 window.addEventListener('keydown', e => {
   switch (e.key) {
     // Left paddle: W/S
     case 'w': leftPaddle.speed = -6; break;
     case 's': leftPaddle.speed = 6; break;
-    // Right paddle: Up/Down
-    case 'ArrowUp': rightPaddle.speed = -6; break;
-    case 'ArrowDown': rightPaddle.speed = 6; break;
   }
 });
 window.addEventListener('keyup', e => {
   switch (e.key) {
     case 'w': case 's': leftPaddle.speed = 0; break;
-    case 'ArrowUp': case 'ArrowDown': rightPaddle.speed = 0; break;
   }
 });
 
