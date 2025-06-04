@@ -1,0 +1,23 @@
+body {
+  background: #181818;
+  color: #fff;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin: 20px 0 10px 0;
+  font-size: 2.5em;
+  letter-spacing: 2px;
+}
+
+canvas#pong {
+  background: #222;
+  display: block;
+  margin: 20px auto 10px auto;
+  border: 4px solid #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #000;
+}
