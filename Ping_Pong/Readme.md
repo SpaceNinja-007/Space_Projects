@@ -32,3 +32,5 @@ Have fun coding your own Ping Pong game! 🏓
 0.15 Website hosted
 
 0.20 Bug fix
+
+0.25 Big bug fix
