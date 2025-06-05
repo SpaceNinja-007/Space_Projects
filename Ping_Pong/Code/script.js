@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let leftScore = 0, rightScore = 0;
 
   // Ball speed cap
-  const MAX_BALL_SPEED = 12;
+  const MAX_BALL_SPEED = 14;
   function capBallSpeed() {
     if (Math.abs(ball.vx) > MAX_BALL_SPEED) {
       ball.vx = MAX_BALL_SPEED * Math.sign(ball.vx);
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
    if (rightPaddle.ai) {
   const centerPaddle = rightPaddle.y + paddleHeight / 2;
   if (centerPaddle < ball.y) {
-    rightPaddle.speed =1;   // <-- AI speed here also yes the speed is 1
+    rightPaddle.speed =1.5;   // <-- AI speed here also yes the speed is 1.5
   } else if (centerPaddle > ball.y + ball.size) {
     rightPaddle.speed = -4;
   } else {
