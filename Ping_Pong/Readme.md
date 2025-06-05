@@ -34,3 +34,5 @@ Have fun coding your own Ping Pong game! 🏓
 0.20 Bug fix
 
 0.25 Big bug fix
+
+0.30 How did I miss this bug!
