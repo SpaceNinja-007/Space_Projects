@@ -12,6 +12,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let leftScore = 0, rightScore = 0;
 
+  // Ball speed cap
+  const MAX_BALL_SPEED = 12;
+  function capBallSpeed() {
+    if (Math.abs(ball.vx) > MAX_BALL_SPEED) {
+      ball.vx = MAX_BALL_SPEED * Math.sign(ball.vx);
+    }
+    if (Math.abs(ball.vy) > MAX_BALL_SPEED) {
+      ball.vy = MAX_BALL_SPEED * Math.sign(ball.vy);
+    }
+  }
+
   // Load images with robust failsafe
   const shurikenImg = new Image();
   const bambooImg = new Image();
@@ -30,8 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
   bambooImg.onload = tryStart;
   bambooImg.onerror = tryStart;
 
- shurikenImg.src = 'Assets/Ninja-star.svg';
-bambooImg.src = 'Assets/Bamboo.svg';
+  shurikenImg.src = 'Assets/Ninja-star.svg';
+  bambooImg.src = 'Assets/Bamboo.svg';
+
   // If already cached, manually fire onload once event handlers are set
   if (shurikenImg.complete) shurikenImg.onload();
   if (bambooImg.complete) bambooImg.onload();
@@ -126,7 +138,7 @@ bambooImg.src = 'Assets/Bamboo.svg';
   function resetBall() {
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
-    ball.vx = -ball.vx;
+    ball.vx = 5 * (Math.random() > 0.5 ? 1 : -1); // Reset to initial speed and random direction
     ball.vy = (Math.random() - 0.5) * 6;
     ball.angle = 0;
   }
@@ -160,7 +172,8 @@ bambooImg.src = 'Assets/Bamboo.svg';
     // Top/bottom collision
     if (ball.y < 0 || ball.y > canvas.height - ball.size) ball.vy *= -1;
 
-    // Paddle collision
+    // Paddle collision with speed cap
+    let collision = false;
     if (
       ball.x < leftPaddle.x + paddleWidth &&
       ball.y + ball.size > leftPaddle.y &&
@@ -168,6 +181,7 @@ bambooImg.src = 'Assets/Bamboo.svg';
     ) {
       ball.vx *= -1.1;
       ball.x = leftPaddle.x + paddleWidth;
+      collision = true;
     }
     if (
       ball.x + ball.size > rightPaddle.x &&
@@ -176,7 +190,9 @@ bambooImg.src = 'Assets/Bamboo.svg';
     ) {
       ball.vx *= -1.1;
       ball.x = rightPaddle.x - ball.size;
+      collision = true;
     }
+    if (collision) capBallSpeed();
 
     // Score
     if (ball.x < 0) {
