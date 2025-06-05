@@ -33,13 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
   shurikenImg.src = 'Ninja-star.svg';
   bambooImg.src = 'Bamboo.svg';
 
-  // If already cached, manually fire onload
+  // If already cached, manually fire onload once event handlers are set
   if (shurikenImg.complete) shurikenImg.onload();
   if (bambooImg.complete) bambooImg.onload();
 
-  // ...rest of your code stays exactly the same!
-  // (cut for brevity, but everything after image loading is unchanged)
-});
+  function drawRect(x, y, w, h, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, w, h);
+  }
 
   function drawCircle(x, y, r, color = '#fff') {
     ctx.beginPath();
