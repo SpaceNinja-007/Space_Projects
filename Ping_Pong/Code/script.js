@@ -1,3 +1,5 @@
+// SpaceNinja Pong - SVG Failsafe & Pro Bamboo Handle
+
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('pong');
   const ctx = canvas.getContext('2d');
@@ -17,6 +19,22 @@ document.addEventListener('DOMContentLoaded', () => {
   // Load the bamboo paddle image
   const bambooImg = new Image();
   bambooImg.src = 'Bamboo.svg';
+
+  // Pro: Failsafe—always start even if SVG fails to load
+  let imagesToLoad = 2, imagesLoaded = 0, started = false;
+  function tryStart() {
+    imagesLoaded++;
+    if (!started && imagesLoaded >= imagesToLoad) {
+      started = true;
+      gameLoop();
+    }
+  }
+  shurikenImg.onload = tryStart;
+  bambooImg.onload = tryStart;
+  shurikenImg.onerror = tryStart;
+  bambooImg.onerror = tryStart;
+  if (shurikenImg.complete) tryStart();
+  if (bambooImg.complete) tryStart();
 
   function drawRect(x, y, w, h, color) {
     ctx.fillStyle = color;
@@ -42,7 +60,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Pro: Bamboo paddle with handle, always draws even if SVG fails!
   function drawBambooPaddle(x, y, width, height, flip = false) {
+    // Draw the bamboo handle first
+    ctx.save();
+    ctx.fillStyle = '#deb887'; // Bamboo tan
+    ctx.strokeStyle = '#a87b3a'; // Outline
+    ctx.lineWidth = 2;
+
+    const handleLength = 20;
+    const handleRadius = width / 1.5;
+
+    if (!flip) {
+      // Left paddle: handle on the left
+      ctx.beginPath();
+      ctx.arc(x - handleLength / 2, y + height / 2, handleRadius, Math.PI / 2, Math.PI * 1.5, false);
+      ctx.rect(x - handleLength, y + height * 0.15, handleLength, height * 0.7);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      // Bamboo node detail
+      ctx.beginPath();
+      ctx.moveTo(x - handleLength + 4, y + height * 0.25);
+      ctx.lineTo(x - 2, y + height * 0.25);
+      ctx.strokeStyle = '#c2a16d';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    } else {
+      // Right paddle: handle on the right
+      ctx.beginPath();
+      ctx.arc(x + width + handleLength / 2, y + height / 2, handleRadius, Math.PI * 1.5, Math.PI / 2, false);
+      ctx.rect(x + width, y + height * 0.15, handleLength, height * 0.7);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      // Bamboo node detail
+      ctx.beginPath();
+      ctx.moveTo(x + width + 2, y + height * 0.75);
+      ctx.lineTo(x + width + handleLength - 4, y + height * 0.75);
+      ctx.strokeStyle = '#c2a16d';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // Then draw the paddle image or fallback
     if (bambooImg.complete && bambooImg.naturalWidth > 0) {
       ctx.save();
       ctx.translate(x + width / 2, y + height / 2);
@@ -134,6 +196,55 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 10; i < canvas.height; i += 30) {
       drawRect(canvas.width/2 - 2, i, 4, 20, '#fff8');
     }
+
+    // Both paddles are now epic bamboo!
+    drawBambooPaddle(leftPaddle.x, leftPaddle.y, paddleWidth, paddleHeight, false);
+    drawBambooPaddle(rightPaddle.x, rightPaddle.y, paddleWidth, paddleHeight, true);
+
+    // Ball (spinning ninja star)
+    drawBall(ctx, ball.x, ball.y, ball.size, ball.angle);
+
+    // Score
+    drawText(leftScore, canvas.width/4, 50);
+    drawText(rightScore, 3*canvas.width/4, 50);
+  }
+
+  function gameLoop() {
+    update();
+    render();
+    requestAnimationFrame(gameLoop);
+  }
+
+  window.addEventListener('keydown', e => {
+    switch (e.key) {
+      case 'w':
+      case 'W':
+      case 'ArrowUp':
+        leftPaddle.speed = -6;
+        break;
+      case 's':
+      case 'S':
+      case 'ArrowDown':
+        leftPaddle.speed = 6;
+        break;
+    }
+  });
+  window.addEventListener('keyup', e => {
+    switch (e.key) {
+      case 'w':
+      case 'W':
+      case 's':
+      case 'S':
+      case 'ArrowUp':
+      case 'ArrowDown':
+        leftPaddle.speed = 0;
+        break;
+    }
+  });
+
+  // Pro Tip: Use console.log(bambooImg, shurikenImg) to debug image loading!
+  //          If your SVGs don't appear, check file names and paths (case sensitive!).
+});
 
     // Both paddles are now epic bamboo!
     drawBambooPaddle(leftPaddle.x, leftPaddle.y, paddleWidth, paddleHeight, false);
