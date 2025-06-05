@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
    if (rightPaddle.ai) {
   const centerPaddle = rightPaddle.y + paddleHeight / 2;
   if (centerPaddle < ball.y) {
-    rightPaddle.speed = 3;   // <-- AI speed here
+    rightPaddle.speed = 2;   // <-- AI speed here
   } else if (centerPaddle > ball.y + ball.size) {
     rightPaddle.speed = -4;
   } else {
