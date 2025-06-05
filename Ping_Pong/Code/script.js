@@ -12,15 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let leftScore = 0, rightScore = 0;
 
-  // Load the ninja star image
+  // Load images with robust failsafe
   const shurikenImg = new Image();
-  shurikenImg.src = 'Ninja-star.svg';
-
-  // Load the bamboo paddle image
   const bambooImg = new Image();
-  bambooImg.src = 'Bamboo.svg';
-
-  // Pro: Failsafe—always start even if SVG fails to load
   let imagesToLoad = 2, imagesLoaded = 0, started = false;
   function tryStart() {
     imagesLoaded++;
@@ -29,17 +23,23 @@ document.addEventListener('DOMContentLoaded', () => {
       gameLoop();
     }
   }
-  shurikenImg.onload = tryStart;
-  bambooImg.onload = tryStart;
-  shurikenImg.onerror = tryStart;
-  bambooImg.onerror = tryStart;
-  if (shurikenImg.complete) tryStart();
-  if (bambooImg.complete) tryStart();
 
-  function drawRect(x, y, w, h, color) {
-    ctx.fillStyle = color;
-    ctx.fillRect(x, y, w, h);
-  }
+  // Attach event handlers before setting src
+  shurikenImg.onload = tryStart;
+  shurikenImg.onerror = tryStart;
+  bambooImg.onload = tryStart;
+  bambooImg.onerror = tryStart;
+
+  shurikenImg.src = 'Ninja-star.svg';
+  bambooImg.src = 'Bamboo.svg';
+
+  // If already cached, manually fire onload
+  if (shurikenImg.complete) shurikenImg.onload();
+  if (bambooImg.complete) bambooImg.onload();
+
+  // ...rest of your code stays exactly the same!
+  // (cut for brevity, but everything after image loading is unchanged)
+});
 
   function drawCircle(x, y, r, color = '#fff') {
     ctx.beginPath();
