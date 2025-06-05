@@ -30,9 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
   bambooImg.onload = tryStart;
   bambooImg.onerror = tryStart;
 
-  shurikenImg.src = 'Ninja-star.svg';
-  bambooImg.src = 'Bamboo.svg';
-
+ shurikenImg.src = 'Assets/Ninja-star.svg';
+bambooImg.src = 'Assets/Bamboo.svg';
   // If already cached, manually fire onload once event handlers are set
   if (shurikenImg.complete) shurikenImg.onload();
   if (bambooImg.complete) bambooImg.onload();
