@@ -1,5 +1,128 @@
-<h2>My Projects</h2>
-<ul>
-<a href="ping-pong/index.html">Go to Subfolder Index</a>
-  <!-- more projects here -->
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SpaceNinja's Projects</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: radial-gradient(ellipse at top left, #1e2a4a 0%, #121212 100%);
+      color: #fff;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      margin-top: 2em;
+      margin-bottom: 0.5em;
+      font-size: 2.8em;
+      color: #00ffe7;
+      text-shadow: 0 0 10px #00ffe7, 0 0 30px #008cff66;
+      letter-spacing: 2px;
+    }
+    .projects-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2em;
+      justify-content: center;
+      margin: 2em 0 3em 0;
+      width: 90%;
+      max-width: 900px;
+    }
+    .project-card {
+      background: rgba(20, 30, 50, 0.85);
+      border-radius: 1.5em;
+      box-shadow: 0 4px 36px #00ffe733;
+      padding: 2em 1.5em 1.5em 1.5em;
+      width: 260px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.15s, box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card:hover {
+      transform: translateY(-10px) scale(1.04) rotate(-1deg);
+      box-shadow: 0 12px 48px #008cff99;
+    }
+    .project-title {
+      font-size: 1.3em;
+      color: #33ffe7;
+      margin-bottom: 0.6em;
+      text-shadow: 0 0 8px #00ffe7cc;
+    }
+    .project-desc {
+      font-size: 1em;
+      color: #b8eaff;
+      margin-bottom: 1.2em;
+      text-align: center;
+      min-height: 3.5em;
+    }
+    .fancy-btn {
+      padding: 0.8em 2em;
+      font-size: 1em;
+      border: none;
+      border-radius: 2em;
+      background: linear-gradient(90deg, #00ffe7 0%, #008cff 100%);
+      color: #121212;
+      cursor: pointer;
+      box-shadow: 0 4px 20px #00ffe766;
+      transition: transform 0.18s, box-shadow 0.18s, background 0.22s;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-top: auto;
+    }
+    .fancy-btn:hover, .fancy-btn:focus {
+      transform: scale(1.07) rotate(-2deg);
+      box-shadow: 0 8px 32px #00ffe7cc;
+      background: linear-gradient(90deg, #008cff 0%, #00ffe7 100%);
+      outline: none;
+    }
+    .credit {
+      color: #888;
+      margin-bottom: 2em;
+      font-size: 1em;
+    }
+    @media (max-width: 700px) {
+      .projects-list {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5em;
+      }
+      .project-card {
+        width: 90%;
+        min-width: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🚀 SpaceNinja's Projects</h1>
+  <div class="projects-list">
+    <!-- Example Project Card -->
+    <div class="project-card">
+      <div class="project-title">Pong Game</div>
+      <div class="project-desc">A retro Pong arcade game rebuilt in JavaScript. Challenge your friends or the AI!</div>
+      <a href="pong/index.html" class="fancy-btn" target="_blank">Play Now</a>
+    </div>
+
+    <!-- Add more projects below as needed -->
+    <!--
+    <div class="project-card">
+      <div class="project-title">Your Project Name</div>
+      <div class="project-desc">Describe your project here. What makes it awesome?</div>
+      <a href="project-folder/index.html" class="fancy-btn" target="_blank">View</a>
+    </div>
+    -->
+  </div>
+  <div class="credit">
+    Pro Tip: Add new projects by copying a <b>project-card</b> block and updating the details.<br/>
+    Want a custom logo or animated header? Just ask, SpaceNinja!
+  </div>
+</body>
+</html>
