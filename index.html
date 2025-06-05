@@ -26,6 +26,26 @@
       text-shadow: 0 0 10px #1d7542, 0 0 30px #42454766;
       letter-spacing: 2px;
     }
+
+    .feature-request-btn, .bug-report-btn {
+  display: inline-block;
+  background: #24292e;
+  color: #fff;
+  padding: 0.75em 1.5em;
+  border-radius: 6px;
+  text-decoration: none;
+  margin: 1em 0.5em;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+.feature-request-btn:hover {
+  background: #28a745;
+}
+.bug-report-btn:hover {
+  background: #d73a49;
+}
+    
     .projects-list {
       display: flex;
       flex-wrap: wrap;
@@ -126,5 +146,24 @@
     Pro Tip: Add new projects by copying a <b>project-card</b> block and updating the details.<br/>
     Want a custom logo or animated header? Just ask, SpaceNinja!
   </div>
+  <a 
+  href="https://github.com/SpaceNinja-007/awesome-website/issues/new?template=feature_request.md" 
+  target="_blank" 
+  rel="noopener"
+  class="feature-request-btn"
+>
+  🚀 Suggest a Feature
+</a>
+
+  <a 
+  href="https://github.com/SpaceNinja-007/awesome-website/issues/new?template=bug_report.md" 
+  target="_blank" 
+  rel="noopener"
+  class="bug-report-btn"
+>
+  🐞 Report a Bug
+</a>
+
+  
 </body>
 </html>
