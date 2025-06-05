@@ -1,38 +1,47 @@
 ---
 name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
+about: Found a bug on the website? Help us improve by submitting a detailed report!
+title: "[Bug] "
+labels: bug, needs-triage
+assignees: SpaceNinja-007
+---
+
+## 🐞 Describe the bug
+What happened? Give us a clear, concise description of the issue.
+
+## 🔁 Steps to reproduce
+How can we see this bug in action? Please walk us through it step-by-step:
+1. Go to '...'
+2. Click on '...'
+3. ...
+4. Error appears
+
+## 🤔 Expected behavior
+What did you expect to happen instead?
+
+## 📸 Screenshots or Video
+If applicable, add screenshots or a short video to help explain the problem (drag & drop works!).
+
+## 💻 Environment details
+Tell us about where you saw the bug:
+
+**Desktop or Laptop:**
+- OS: [e.g. Windows 11, macOS Sonoma]
+- Browser: [e.g. Chrome 125, Firefox 116]
+- Browser Extensions/Add-ons: [if relevant]
+
+**Mobile Device (if applicable):**
+- Device: [e.g. iPhone 15, Pixel 8]
+- OS: [e.g. iOS 17.1, Android 14]
+- Browser: [e.g. Safari, Chrome]
+- App version (if using a PWA or native app): [e.g. 1.0.3]
+
+## 🌐 URL or page
+Is this bug on a specific page? Paste the link here, if possible.
+
+## 📝 Additional context
+Anything else we should know? (Console errors, network logs, ideas for a fix, etc.)
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
-
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
-
-**Expected behavior**
-A clear and concise description of what you expected to happen.
-
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
-
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
-
-**Additional context**
-Add any other context about the problem here.
+> Pro Tip: The more details you provide, the faster SpaceNinja can squash the bug! 🚀
