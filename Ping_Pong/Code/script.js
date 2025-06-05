@@ -147,20 +147,17 @@ document.addEventListener('DOMContentLoaded', () => {
     leftPaddle.y += leftPaddle.speed;
 
     // AI for right paddle
-    if (rightPaddle.ai) {
-      const centerPaddle = rightPaddle.y + paddleHeight / 2;
-      if (centerPaddle < ball.y) {
-        rightPaddle.speed = 4;
-      } else if (centerPaddle > ball.y + ball.size) {
-        rightPaddle.speed = -4;
-      } else {
-        rightPaddle.speed = 0;
-      }
-      rightPaddle.y += rightPaddle.speed;
-    } else {
-      rightPaddle.y += rightPaddle.speed;
-    }
-
+   if (rightPaddle.ai) {
+  const centerPaddle = rightPaddle.y + paddleHeight / 2;
+  if (centerPaddle < ball.y) {
+    rightPaddle.speed = 4;   // <-- AI speed here
+  } else if (centerPaddle > ball.y + ball.size) {
+    rightPaddle.speed = -4;
+  } else {
+    rightPaddle.speed = 0;
+  }
+  rightPaddle.y += rightPaddle.speed;
+}
     leftPaddle.y = Math.max(Math.min(leftPaddle.y, canvas.height - paddleHeight), 0);
     rightPaddle.y = Math.max(Math.min(rightPaddle.y, canvas.height - paddleHeight), 0);
 
