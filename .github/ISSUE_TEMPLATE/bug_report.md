@@ -2,8 +2,9 @@
 name: Bug report
 about: Found a bug on the website? Help us improve by submitting a detailed report!
 title: "[Bug] "
-labels: bug, needs-triage
+labels: bug
 assignees: SpaceNinja-007
+
 ---
 
 ## 🐞 Describe the bug
