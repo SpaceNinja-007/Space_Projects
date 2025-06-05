@@ -28,3 +28,7 @@ Have fun coding your own Ping Pong game! 🏓
 0.0 Game files released
 
 0.10 added arrow keys
+
+0.15 Website hosted
+
+0.20 Bug fix
