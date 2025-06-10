@@ -33,7 +33,7 @@ Feel free to develop, document, and experiment with your own version!
 
 - **0.0** — Initial game files released
 - **0.1** — Website hosted via GitHub Pages
-- **0.15** — Fixed bug in cell reveal
+- **0.15** — Fixed bug with game
 
 ## Contributing
 
