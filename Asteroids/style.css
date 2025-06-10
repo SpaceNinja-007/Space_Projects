@@ -1,0 +1,42 @@
+body {
+  background: radial-gradient(ellipse at center, #111 0%, #000 100%);
+  margin: 0;
+  min-height: 100vh;
+  color: #fff;
+  font-family: 'Orbitron', 'Courier New', Courier, monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#gameCanvas {
+  display: block;
+  background: #111;
+  border: 3px solid rgb(39, 156, 49);
+  border-radius: 16px;
+  box-shadow: 0 0 40px rgb(17, 133, 17), 0 0 100px #222 inset;
+  margin-top: 40px;
+}
+
+h1 {
+  color: rgb(38, 194, 85);
+  text-shadow: 0 0 12px rgb(79, 180, 104), 0 0 4px #fff;
+  letter-spacing: 2px;
+  margin-top: 32px;
+  font-size: 2.2em;
+  font-family: 'Orbitron', 'Arial Black', Arial, sans-serif;
+}
+
+.instructions {
+  margin-top: 16px;
+  color: #ccc;
+  font-size: 1.1em;
+  background: rgba(30,40,60,0.75);
+  padding: 12px 18px;
+  border-radius: 8px;
+  border: 1px solid #222;
+  box-shadow: 0 0 14px #0ff2;
+  max-width: 480px;
+  text-align: center;
+}
