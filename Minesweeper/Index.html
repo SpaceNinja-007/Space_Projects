@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Minesweeper by SpaceNinja</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Link to your CSS file -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1>Minesweeper</h1>
+    <div class="controls">
+      <label for="difficulty">Difficulty:</label>
+      <select id="difficulty">
+        <option value="easy">Easy (8x8, 10 mines)</option>
+        <option value="medium">Medium (16x16, 40 mines)</option>
+        <option value="hard">Hard (24x24, 99 mines)</option>
+      </select>
+      <button id="restart">Restart</button>
+      <span id="timer">⏱ 0</span>
+      <span id="flags">🚩 0</span>
+    </div>
+    <div id="board"></div>
+    <div id="message"></div>
+  </div>
+  <!-- Link to your JS file -->
+  <script src="minesweeper.js"></script>
+</body>
+</html>
