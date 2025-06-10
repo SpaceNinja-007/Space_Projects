@@ -1,18 +1,36 @@
-// SpaceNinja Pong - SVG Failsafe & Pro Bamboo Handle
+// SpaceNinja Pong - SVG Failsafe & Pro Bamboo Handle + Mobile Touch Support + Assets
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('pong');
   const ctx = canvas.getContext('2d');
 
-  // Game objects
+  // --- Responsive resize for mobile ---
+  function resizeCanvas() {
+    if(window.innerWidth < 650) {
+      canvas.width = window.innerWidth * 0.97;
+      canvas.height = window.innerHeight * 0.6;
+    } else {
+      canvas.width = 800;
+      canvas.height = 500;
+    }
+    // Re-center paddles/ball so game never looks weird after resize
+    leftPaddle.y = canvas.height/2 - paddleHeight/2;
+    rightPaddle.x = canvas.width - paddleWidth - 10;
+    rightPaddle.y = canvas.height/2 - paddleHeight/2;
+    ball.x = canvas.width/2;
+    ball.y = canvas.height/2;
+  }
+  window.addEventListener('resize', resizeCanvas);
+
+  // --- Game objects ---
   const paddleHeight = 80, paddleWidth = 12, ballSize = 32;
-  const leftPaddle = { x: 10, y: canvas.height/2 - paddleHeight/2, speed: 0 };
-  const rightPaddle = { x: canvas.width - paddleWidth - 10, y: canvas.height/2 - paddleHeight/2, speed: 0, ai: true };
-  const ball = { x: canvas.width/2, y: canvas.height/2, vx: 5, vy: 2, size: ballSize, angle: 0 };
+  const leftPaddle = { x: 10, y: 0, speed: 0 };
+  const rightPaddle = { x: 0, y: 0, speed: 0, ai: true };
+  const ball = { x: 0, y: 0, vx: 5, vy: 2, size: ballSize, angle: 0 };
 
   let leftScore = 0, rightScore = 0;
 
-  // Ball speed cap
+  // --- Ball speed cap ---
   const MAX_BALL_SPEED = 14;
   function capBallSpeed() {
     if (Math.abs(ball.vx) > MAX_BALL_SPEED) {
@@ -23,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Load images with robust failsafe
+  // --- Load images with robust failsafe and ASSETS BACK ---
   const shurikenImg = new Image();
   const bambooImg = new Image();
   let imagesToLoad = 2, imagesLoaded = 0, started = false;
@@ -34,17 +52,16 @@ document.addEventListener('DOMContentLoaded', () => {
       gameLoop();
     }
   }
-
   // Attach event handlers before setting src
   shurikenImg.onload = tryStart;
   shurikenImg.onerror = tryStart;
   bambooImg.onload = tryStart;
   bambooImg.onerror = tryStart;
 
+  // Use the original asset paths (case sensitive!):
   shurikenImg.src = 'Assets/Ninja-star.svg';
   bambooImg.src = 'Assets/Bamboo.svg';
 
-  // If already cached, manually fire onload once event handlers are set
   if (shurikenImg.complete) shurikenImg.onload();
   if (bambooImg.complete) bambooImg.onload();
 
@@ -147,17 +164,17 @@ document.addEventListener('DOMContentLoaded', () => {
     leftPaddle.y += leftPaddle.speed;
 
     // AI for right paddle
-   if (rightPaddle.ai) {
-  const centerPaddle = rightPaddle.y + paddleHeight / 2;
-  if (centerPaddle < ball.y) {
-    rightPaddle.speed =1.5;   // <-- AI speed here also yes the speed is 1.5
-  } else if (centerPaddle > ball.y + ball.size) {
-    rightPaddle.speed = -4;
-  } else {
-    rightPaddle.speed = 0;
-  }
-  rightPaddle.y += rightPaddle.speed;
-}
+    if (rightPaddle.ai) {
+      const centerPaddle = rightPaddle.y + paddleHeight / 2;
+      if (centerPaddle < ball.y) {
+        rightPaddle.speed = 1.5;
+      } else if (centerPaddle > ball.y + ball.size) {
+        rightPaddle.speed = -4;
+      } else {
+        rightPaddle.speed = 0;
+      }
+      rightPaddle.y += rightPaddle.speed;
+    }
     leftPaddle.y = Math.max(Math.min(leftPaddle.y, canvas.height - paddleHeight), 0);
     rightPaddle.y = Math.max(Math.min(rightPaddle.y, canvas.height - paddleHeight), 0);
 
@@ -204,19 +221,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function render() {
     drawRect(0, 0, canvas.width, canvas.height, '#222');
-
     // Net
     for (let i = 10; i < canvas.height; i += 30) {
       drawRect(canvas.width/2 - 2, i, 4, 20, '#fff8');
     }
-
     // Both paddles are now epic bamboo!
     drawBambooPaddle(leftPaddle.x, leftPaddle.y, paddleWidth, paddleHeight, false);
     drawBambooPaddle(rightPaddle.x, rightPaddle.y, paddleWidth, paddleHeight, true);
-
     // Ball (spinning ninja star)
     drawBall(ctx, ball.x, ball.y, ball.size, ball.angle);
-
     // Score
     drawText(leftScore, canvas.width/4, 50);
     drawText(rightScore, 3*canvas.width/4, 50);
@@ -228,6 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(gameLoop);
   }
 
+  // --- Desktop keyboard controls ---
   window.addEventListener('keydown', e => {
     switch (e.key) {
       case 'w':
@@ -255,6 +269,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Pro Tip: Use console.log(bambooImg, shurikenImg) to debug image loading!
-  //          If your SVGs don't appear, check file names and paths (case sensitive!).
+  // --- Mobile touch controls (tap upper/lower half to move paddle) ---
+  let touchActive = false;
+  canvas.addEventListener('touchstart', function(e) {
+    if (e.touches.length > 0) {
+      const rect = canvas.getBoundingClientRect();
+      const y = e.touches[0].clientY - rect.top;
+      const mid = canvas.height / 2;
+      if (y < mid) {
+        leftPaddle.speed = -6;
+      } else {
+        leftPaddle.speed = 6;
+      }
+      touchActive = true;
+      e.preventDefault();
+    }
+  });
+  canvas.addEventListener('touchmove', function(e) {
+    if (touchActive && e.touches.length > 0) {
+      const rect = canvas.getBoundingClientRect();
+      const y = e.touches[0].clientY - rect.top;
+      const mid = canvas.height / 2;
+      if (y < mid) {
+        leftPaddle.speed = -6;
+      } else {
+        leftPaddle.speed = 6;
+      }
+      e.preventDefault();
+    }
+  });
+  canvas.addEventListener('touchend', function(e) {
+    leftPaddle.speed = 0;
+    touchActive = false;
+    e.preventDefault();
+  });
+
+  // --- Initial placement ---
+  resizeCanvas();
+
+  // Pro Tip, SpaceNinja: Make sure the "Assets" folder is at the same level as your HTML file, and your SVGs are named exactly "Ninja-star.svg" and "Bamboo.svg" (case-sensitive!). If you want to let users drag the paddle, just ask for a pro upgrade!
 });
