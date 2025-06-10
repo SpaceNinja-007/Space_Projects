@@ -1,5 +1,6 @@
 // --- Minesweeper by SpaceNinja ---
 // Pro-level vanilla JS logic for board creation, mine placement, cell reveal, flagging, and win/loss
+// Now with: guaranteed safe first click!
 
 // ====== Game Config ======
 const DIFFICULTY = {
@@ -15,6 +16,8 @@ let rows = 0, cols = 0, mines = 0;
 let gameOver = false;
 let flagsLeft = 0;
 let timer = 0, timerInterval = null;
+let firstClick = true;
+let minesPlaced = false;
 
 // ====== DOM Elements ======
 const boardEl = document.getElementById('board');
@@ -44,23 +47,29 @@ function initGame() {
   revealed = Array.from({ length: rows }, () => Array(cols).fill(false));
   flagged = Array.from({ length: rows }, () => Array(cols).fill(false));
   timer = 0;
-  clearInterval(timerInterval);
+  firstClick = true;
+  minesPlaced = false;
+  stopTimer();
   timerEl.textContent = '⏱ 0';
   flagsEl.textContent = `🚩 ${flagsLeft}`;
   messageEl.textContent = '';
   boardEl.innerHTML = '';
   boardEl.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
   boardEl.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
-  placeMines();
   updateBoard();
 }
 
-function placeMines() {
-  // Place mines randomly
+// Place mines after first click, avoiding (firstR, firstC)
+function placeMines(firstR, firstC) {
   let cells = [];
-  for (let r = 0; r < rows; r++)
-    for (let c = 0; c < cols; c++)
-      cells.push([r, c]);
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      // Avoid the first-clicked cell
+      if (!(r === firstR && c === firstC)) {
+        cells.push([r, c]);
+      }
+    }
+  }
   shuffle(cells);
   for (let i = 0; i < mines; i++) {
     const [r, c] = cells[i];
@@ -115,6 +124,13 @@ function updateBoard() {
 
 function revealCell(r, c) {
   if (gameOver || revealed[r][c] || flagged[r][c]) return;
+  // Place mines on first click, avoiding (r, c)
+  if (!minesPlaced) {
+    placeMines(r, c);
+    minesPlaced = true;
+    startTimer();
+    firstClick = false;
+  }
   revealed[r][c] = true;
   if (board[r][c] === 'M') {
     revealAll();
@@ -123,7 +139,6 @@ function revealCell(r, c) {
     gameOver = true;
     return;
   }
-  if (timer === 0) startTimer();
   if (board[r][c] === 0) {
     // Flood fill reveal
     for (let dr = -1; dr <= 1; dr++)
@@ -135,7 +150,7 @@ function revealCell(r, c) {
   }
   updateBoard();
   if (checkWin()) {
-    messageEl.textContent = '🏆 You Win, SpaceNinja!';
+    messageEl.textContent = '🏆 You Win!';
     stopTimer();
     gameOver = true;
   }
@@ -143,6 +158,7 @@ function revealCell(r, c) {
 
 function flagCell(r, c) {
   if (gameOver || revealed[r][c]) return;
+  if (!flagged[r][c] && flagsLeft === 0) return; // No flags left
   flagged[r][c] = !flagged[r][c];
   flagsLeft += flagged[r][c] ? -1 : 1;
   flagsEl.textContent = `🚩 ${flagsLeft}`;
@@ -165,6 +181,7 @@ function checkWin() {
 
 // ====== Timer ======
 function startTimer() {
+  stopTimer(); // Always clear any existing interval
   timerInterval = setInterval(() => {
     timer++;
     timerEl.textContent = `⏱ ${timer}`;
@@ -202,4 +219,5 @@ document.addEventListener('keydown', e => {
 initGame();
 
 // ====== Pro Tip: ======
-// You can tweak board size/difficulty, add best score saving with localStorage, or spice up your UI with animations/sound!
+// For an even fancier UX, also avoid mines in the 8 cells around the first click! Want that? Just ask, SpaceNinja!
+// And: Did you know the best Minesweeper players use the right mouse for flags almost as fast as the left for reveals? 🚩💣
