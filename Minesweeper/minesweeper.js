@@ -134,7 +134,7 @@ function revealCell(r, c) {
   revealed[r][c] = true;
   if (board[r][c] === 'M') {
     revealAll();
-    messageEl.textContent = '💥 Game Over, SpaceNinja!';
+    messageEl.textContent = '💥 Game Over!';
     stopTimer();
     gameOver = true;
     return;
