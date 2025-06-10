@@ -53,6 +53,7 @@ class Spaceship {
     this.lives--;
     this.dead = true;
     this.respawnTimer = 90; // 1.5 seconds at 60fps
+    explosions.push(new Explosion(this.x, this.y, {color: '#fff', amount: 30, radius: this.radius}));
   }
   // Call in game loop to handle respawn
   updateRespawn() {
@@ -136,12 +137,62 @@ class Missile {
   }
 }
 
+// --- Explosion Class ---
+class Explosion {
+  constructor(x, y, opts = {}) {
+    this.x = x;
+    this.y = y;
+    this.particles = [];
+    this.amount = opts.amount || 20;
+    this.color = opts.color || "orange";
+    this.radius = opts.radius || 20;
+    this.life = opts.life || 30; // frames
+    for (let i = 0; i < this.amount; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = (Math.random() * 2 + 1) * (this.radius / 20);
+      this.particles.push({
+        x: this.x,
+        y: this.y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: Math.random() * this.life * 0.5 + this.life * 0.5,
+        maxLife: this.life,
+        color: this.color
+      });
+    }
+  }
+  update() {
+    this.particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life--;
+    });
+    // Remove dead particles
+    this.particles = this.particles.filter(p => p.life > 0);
+  }
+  draw(ctx) {
+    this.particles.forEach(p => {
+      ctx.save();
+      ctx.globalAlpha = p.life / p.maxLife;
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    });
+  }
+  isAlive() {
+    return this.particles.length > 0;
+  }
+}
+
 // --- Game Logic ---
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const ship = new Spaceship(400, 300);
 let asteroids = [];
 let missiles = [];
+let explosions = [];
 let keys = {};
 let score = 0;
 let gameOver = false;
@@ -170,6 +221,7 @@ function restartGame() {
   ship.invincibleTimer = 90;
   score = 0;
   missiles = [];
+  explosions = [];
   spawnAsteroids(5);
   gameOver = false;
 }
@@ -204,11 +256,23 @@ function update() {
   missiles.forEach(m => m.move());
   missiles = missiles.filter(m => m.life > 0);
 
+  // Explosions update
+  explosions.forEach(e => e.update());
+  explosions = explosions.filter(e => e.isAlive());
+
   // Missile-Asteroid collision
   for (let i = asteroids.length - 1; i >= 0; i--) {
     for (let j = missiles.length - 1; j >= 0; j--) {
       if (collide(asteroids[i], missiles[j])) {
         // Break asteroid if large, else destroy
+        explosions.push(new Explosion(
+          asteroids[i].x, asteroids[i].y, 
+          {
+            color: '#ff0',
+            amount: Math.floor(10 + asteroids[i].radius),
+            radius: asteroids[i].radius
+          }
+        ));
         if (asteroids[i].radius > 20) {
           for (let n = 0; n < 2; n++) {
             asteroids.push(
@@ -265,6 +329,7 @@ function draw() {
   ship.draw(ctx);
   asteroids.forEach(ast => ast.draw(ctx));
   missiles.forEach(m => m.draw(ctx));
+  explosions.forEach(e => e.draw(ctx));
 
   // HUD
   ctx.fillStyle = "#fff";
