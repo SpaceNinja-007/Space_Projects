@@ -50,7 +50,12 @@ class Spaceship {
   }
   // Call when ship dies
   die() {
-    this.lives--;
+    // Use dev-mode aware loseLife function!
+    if (typeof window.loseLife === 'function') {
+      window.loseLife();
+    } else {
+      this.lives--;
+    }
     this.dead = true;
     this.respawnTimer = 90; // 1.5 seconds at 60fps
     explosions.push(new Explosion(this.x, this.y, {color: '#fff', amount: 30, radius: this.radius}));
@@ -195,7 +200,7 @@ let missiles = [];
 let explosions = [];
 let keys = {};
 let score = 0;
-let gameOver = false;
+window.gameOver = false;
 
 // --- Utility Functions ---
 function spawnAsteroids(num) {
@@ -223,7 +228,7 @@ function restartGame() {
   missiles = [];
   explosions = [];
   spawnAsteroids(5);
-  gameOver = false;
+  window.gameOver = false;
 }
 
 // --- Collision Functions ---
@@ -236,7 +241,7 @@ function collide(obj1, obj2) {
 
 // --- Game Update ---
 function update() {
-  if (gameOver) return;
+  if (window.gameOver) return;
 
   // Ship controls
   if (!ship.dead) {
@@ -301,7 +306,7 @@ function update() {
       if (collide(asteroids[i], ship)) {
         ship.die();
         if (ship.lives <= 0) {
-          gameOver = true;
+          window.gameOver = true;
         }
         break;
       }
@@ -309,7 +314,7 @@ function update() {
   }
 
   // Next level if no asteroids left
-  if (!gameOver && asteroids.length === 0) {
+  if (!window.gameOver && asteroids.length === 0) {
     spawnAsteroids(5);
   }
 }
@@ -336,7 +341,7 @@ function draw() {
   ctx.font = "20px Courier New";
   ctx.fillText(`Score: ${score}`, 20, 30);
   ctx.fillText(`Lives: ${ship.lives}`, 700, 30);
-  if (gameOver) {
+  if (window.gameOver) {
     ctx.fillStyle = "#f00";
     ctx.font = "48px Orbitron, Arial Black, Arial";
     ctx.fillText("GAME OVER", 270, 320);
@@ -356,18 +361,10 @@ function gameLoop() {
 window.addEventListener('keydown', e => {
   keys[e.key] = true;
   // Fire missile on Space
-  if (e.key === ' ' && !ship.dead && !gameOver) {
-    missiles.push(
-      new Missile(
-        ship.x + Math.cos(ship.angle) * ship.radius,
-        ship.y + Math.sin(ship.angle) * ship.radius,
-        ship.angle
-      )
-    );
-  }
+  // (Handled by dev mode logic in index.html; don't duplicate here!)
   // Restart on R
   if (e.key === 'r' || e.key === 'R') {
-    if (gameOver) restartGame();
+    if (window.gameOver) restartGame();
   }
 });
 window.addEventListener('keyup', e => keys[e.key] = false);
