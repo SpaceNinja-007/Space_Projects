@@ -4,77 +4,109 @@
   <meta charset="UTF-8">
   <title>Asteroids</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    #devmode-banner {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #111;
+      color: #0f0;
+      font-family: monospace;
+      font-size: 22px;
+      padding: 8px 28px;
+      border-radius: 8px;
+      z-index: 999;
+      display: none;
+      box-shadow: 0 2px 16px #0007;
+      letter-spacing: 2px;
+      opacity: 0.93;
+      pointer-events: none;
+      user-select: none;
+    }
+    body { margin:0; padding:0; overflow:hidden; }
+    canvas { display:block; margin:0 auto; background:#000; }
+  </style>
 </head>
 <body>
   <canvas id="gameCanvas" width="800" height="600"></canvas>
+  <div id="devmode-banner">🛠️ DEV MODE ACTIVE 🛠️</div>
   <script src="astro.js"></script>
-<script>
-// ====== SpaceNinja's Dev Easter Egg ======
+  <script>
+    // ====== SpaceNinja's Pro Dev Mode (fail-proof, fully integrated) ======
 
-// Tracks the secret code input
-let secretCode = '';
-let devModeActive = false;
+    let secretCode = '';
+    let devModeActive = false;
+    let lastDevFire = 0;
 
-// Listen for the '*-*' code to activate Dev Mode
-document.addEventListener('keydown', function(e) {
-  secretCode += e.key;
-  if (secretCode.length > 3) secretCode = secretCode.slice(-3);
+    window.unlimitedLives = false;
 
-  if (secretCode === "*-*") {
-    devModeActive = true;
-    secretCode = '';
-    window.unlimitedLives = true;
-    alert('🛠️ Dev Mode: Unlimited lives & dev laser rapid-fire enabled!');
-    // Optionally show an on-screen indicator here
-  }
-});
-
-// Example: Override your game's "lose life" logic
-function loseLife() {
-  if (window.unlimitedLives) {
-    // Infinite lives: prevent losing lives
-    return;
-  }
-  // Normal lose life logic (replace with your game's code)
-  player.lives -= 1;
-  // ...rest of your lose life code
-}
-
-// Enhanced weapon logic for Dev Mode
-let lastDevFire = 0;
-document.addEventListener('keydown', function(e) {
-  if (e.code === "Space") {
-    if (devModeActive) {
-      // Allow rapid fire (no rate limit, or set your own)
-      const now = Date.now();
-      if (now - lastDevFire > 60) { // e.g., 60ms between dev shots
-        fireDevLasers();
-        lastDevFire = now;
-      }
-    } else {
-      fireMissile(); // Regular shot
+    function setDevBanner(on) {
+      document.getElementById('devmode-banner').style.display = on ? 'block' : 'none';
     }
-  }
-});
+    setDevBanner(false);
 
-// Fires multiple lasers in a spread pattern
-function fireDevLasers() {
-  const spread = 5; // number of lasers
-  const angleStep = 10; // degrees between lasers
-  for (let i = -2; i <= 2; i++) {
-    spawnLaser(i * angleStep);
-  }
-}
+    window.loseLife = function() {
+      if (window.unlimitedLives) return;
+      if (typeof ship !== 'undefined' && typeof ship.lives === 'number') {
+        ship.lives -= 1;
+      }
+    };
 
-// Replace these stubs with your actual game logic:
-function fireMissile() {
-  spawnLaser(0); // normal single straight shot
-}
-function spawnLaser(angleOffset) {
-  // Replace this with your game's projectile code!
-  console.log("💥 Laser fired! Offset:", angleOffset);
-  // e.g., createProjectile(player.x, player.y, player.angle + angleOffset)
-}
-</script>
+    // Dev mode missile logic (integrates with the missile system)
+    function fireDevLasers() {
+      const angleStep = 10 * Math.PI / 180;
+      for (let i = -2; i <= 2; i++) {
+        spawnLaser(i * angleStep);
+      }
+    }
+
+    function fireMissile() {
+      spawnLaser(0);
+    }
+
+    // Plug in to your real missile logic!
+    function spawnLaser(angleOffset) {
+      if (typeof ship !== 'undefined' && !ship.dead && !window.gameOver) {
+        missiles.push(
+          new Missile(
+            ship.x + Math.cos(ship.angle + angleOffset) * ship.radius,
+            ship.y + Math.sin(ship.angle + angleOffset) * ship.radius,
+            ship.angle + angleOffset
+          )
+        );
+      }
+    }
+
+    document.addEventListener('keydown', function(e) {
+      // Only add visible, non-modifier keys
+      if (typeof e.key === "string" && e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        secretCode += e.key;
+        if (secretCode.length > 3) secretCode = secretCode.slice(-3);
+      }
+
+      // Unlock dev mode ONLY when typing *-*
+      if (secretCode === "*-*" && !devModeActive) {
+        devModeActive = true;
+        window.unlimitedLives = true;
+        setDevBanner(true);
+        secretCode = '';
+        alert('🛠️ Dev Mode: Unlimited lives & dev laser rapid-fire enabled!');
+      }
+
+      // Space bar: dev rapid fire if dev mode, normal otherwise
+      if (e.code === "Space" && !e.repeat) {
+        if (devModeActive) {
+          const now = Date.now();
+          if (now - lastDevFire > 60) {
+            fireDevLasers();
+            lastDevFire = now;
+          }
+        } else {
+          fireMissile();
+        }
+      }
+    });
+  </script>
 </body>
 </html>
