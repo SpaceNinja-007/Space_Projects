@@ -6,10 +6,75 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Asterroids</h1>
-  
   <canvas id="gameCanvas" width="800" height="600"></canvas>
-  <h3>Use Arrow keys to move use Space bar to fire</h3>
-  <script src="script.js"></script>
+  <script src="astro.js"></script>
+<script>
+// ====== SpaceNinja's Dev Easter Egg ======
+
+// Tracks the secret code input
+let secretCode = '';
+let devModeActive = false;
+
+// Listen for the '*-*' code to activate Dev Mode
+document.addEventListener('keydown', function(e) {
+  secretCode += e.key;
+  if (secretCode.length > 3) secretCode = secretCode.slice(-3);
+
+  if (secretCode === "*-*") {
+    devModeActive = true;
+    secretCode = '';
+    window.unlimitedLives = true;
+    alert('🛠️ Dev Mode: Unlimited lives & dev laser rapid-fire enabled!');
+    // Optionally show an on-screen indicator here
+  }
+});
+
+// Example: Override your game's "lose life" logic
+function loseLife() {
+  if (window.unlimitedLives) {
+    // Infinite lives: prevent losing lives
+    return;
+  }
+  // Normal lose life logic (replace with your game's code)
+  player.lives -= 1;
+  // ...rest of your lose life code
+}
+
+// Enhanced weapon logic for Dev Mode
+let lastDevFire = 0;
+document.addEventListener('keydown', function(e) {
+  if (e.code === "Space") {
+    if (devModeActive) {
+      // Allow rapid fire (no rate limit, or set your own)
+      const now = Date.now();
+      if (now - lastDevFire > 60) { // e.g., 60ms between dev shots
+        fireDevLasers();
+        lastDevFire = now;
+      }
+    } else {
+      fireMissile(); // Regular shot
+    }
+  }
+});
+
+// Fires multiple lasers in a spread pattern
+function fireDevLasers() {
+  const spread = 5; // number of lasers
+  const angleStep = 10; // degrees between lasers
+  for (let i = -2; i <= 2; i++) {
+    spawnLaser(i * angleStep);
+  }
+}
+
+// Replace these stubs with your actual game logic:
+function fireMissile() {
+  spawnLaser(0); // normal single straight shot
+}
+function spawnLaser(angleOffset) {
+  // Replace this with your game's projectile code!
+  console.log("💥 Laser fired! Offset:", angleOffset);
+  // e.g., createProjectile(player.x, player.y, player.angle + angleOffset)
+}
+</script>
 </body>
 </html>
