@@ -1,90 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>Oh NOOO</title>
+  <meta charset="UTF-8">
+  <title>Oh NOOO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background-image: url('the 404.jpg');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      text-align: center;
+      padding-top: 100px;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    h1 {
+      color: #9ec757;
+      margin-bottom: 0.4em;
+      font-size: 3em;
+    }
+
+    h2 {
+      color: #3392ff;
+      font-size: 1.5em;
+      font-weight: normal;
+      margin-top: 0;
+      margin-bottom: 1em;
+    }
+
+    p {
+      color: lawngreen;
+      font-size: 1.2em;
+      margin-bottom: 2em;
+    }
+
+    button {
+      font-family: inherit;
+      color: #ccdb46;
+      background-color: rgba(233, 112, 68, 0.83);
+      border: none;
+      border-radius: 8px;
+      padding: 15px 30px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      outline: none;
+    }
+
+    button:hover, button:focus {
+      background-color: #ff6347;
+    }
+  </style>
 </head>
-
 <body>
+  <h1>Ummm, this does not look right</h1>
+  <h2>Don't be sad! We'll get you back by rocket in no time! (Or in one year)</h2>
+  <p>Injecting you to home in <span id="countdown">10</span> seconds...</p>
+  <button id="redirectBtn" type="button" aria-label="Go to homepage">Go to Home</button>
 
-    <h1>Ummm, this does not look right</h1>
+  <script>
+    // Run this after DOM is loaded to avoid null errors
+    document.addEventListener("DOMContentLoaded", function () {
+      let countdownValue = 10;
+      const countdownElement = document.getElementById("countdown");
+      const redirectBtn = document.getElementById("redirectBtn");
 
-    <h2>Don't be sad! We'll get you back by rocket in no time! (Or in one year)</h2>
-
-    <p>Enjecting you to home in <span id="countdown">10</span> seconds...</p>
-
-    <!-- Button to go to the home page -->
-    <button id="redirectBtn">Go to Home</button>
-
-    <style>
-
-        p{
-color: lawngreen;
-
-
+      const countdownInterval = setInterval(() => {
+        countdownValue--;
+        countdownElement.textContent = countdownValue;
+        if (countdownValue <= 0) {
+          clearInterval(countdownInterval);
+          window.location.href = "index.html";
         }
+      }, 1000);
 
-
-        h1 {
-            color: rgb(158, 199, 87);
-            font-family: sans-serif;
-            
-        }
-
-        h2 {
-            color: rgb(51, 146, 255);
-            font-family: sans-serif;
-        }
-
-        body {
-            background-image: url('the 404.jpg');
-            background-size: cover;
-            text-align: top;
-            color: white;
-            padding-top: 100px;
-        }
-
-        button {
-            font-family: sans-serif;
-            color: rgb(204, 219, 70);
-            background-color: rgba(233, 112, 68, 0.829);
-            border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: rgb(255, 99, 71);
-        }
-    </style>
-
-    <script>
-        // JavaScript for handling countdown
-        let countdownValue = 10; // Starting countdown value in seconds
-        const countdownElement = document.getElementById("countdown");
-        const redirectBtn = document.getElementById("redirectBtn");
-
-        // Function to update the countdown
-        const countdownInterval = setInterval(function () {
-            countdownValue--;  // Decrease countdown value by 1 second
-            countdownElement.innerHTML = countdownValue;  // Update the displayed countdown
-
-            // If countdown reaches 0, clear interval and redirect
-            if (countdownValue <= 0) {
-                clearInterval(countdownInterval);  // Stop the countdown
-                window.location.href = "index.html";  // Redirect to homepage
-            }
-        }, 1000); // Update every 1 second
-
-        // Button functionality - Redirect immediately when clicked
-        redirectBtn.addEventListener("click", function () {
-            clearInterval(countdownInterval);  // Stop the countdown if the user clicks the button
-            window.location.href = "index.html";  // Redirect immediately
-        });
-    </script>
-
+      redirectBtn.addEventListener("click", function () {
+        clearInterval(countdownInterval);
+        window.location.href = "index.html";
+      });
+    });
+  </script>
 </body>
-
 </html>
