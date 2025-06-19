@@ -6,6 +6,9 @@ And are free!
 Also the Test_websites or other ones are dead and I don't use them (and don't know how to get rid of them!)
 
 If you are going to add or update code please make an pull request!
+
+Notes: 1.The code is under the MIT license.
+
 # Links
 [Website](https://spaceninja-007.github.io/Space_Projects/)
 
