@@ -67,6 +67,7 @@
       cursor: pointer;
       font-weight: bold;
       transition: background 0.3s;
+      margin-right: 0.5em;
     }
 
     .toggle-theme-btn:hover {
@@ -170,77 +171,135 @@
         min-width: 0;
       }
     }
+
+body.classic-ui {
+  background: radial-gradient(ellipse at center, #0a0f1c 0%, #000000 100%);
+  color: #00ff00;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  transition: background 0.5s ease, color 0.5s ease;
+}
+
+body.classic-ui h1 {
+  color: #00ff00;
+  text-shadow: 0 0 8px #00ff00, 0 0 20px #00ff00;
+}
+
+body.classic-ui .project-card {
+  background: rgba(0, 255, 0, 0.05);
+  box-shadow: 0 0 24px #00ff00;
+  border: 1px solid #00ff00;
+}
+
+body.classic-ui .project-title {
+  color: #00ff00;
+  text-shadow: 0 0 6px #00ff00;
+}
+
+body.classic-ui .project-desc {
+  color: #66ffcc;
+  text-shadow: 0 0 4px #66ffcc;
+}
+
+body.classic-ui .fancy-btn,
+body.classic-ui .feature-request-btn,
+body.classic-ui .bug-report-btn {
+  background: transparent !important;
+  border: 2px solid #00ff00 !important;
+  color: #00ff00 !important;
+  text-shadow: 0 0 5px #00ff00;
+  box-shadow: 0 0 12px #00ff00;
+}
+
+body.classic-ui .fancy-btn:hover,
+body.classic-ui .feature-request-btn:hover,
+body.classic-ui .bug-report-btn:hover {
+  background: #00ff00 !important;
+  color: #000000 !important;
+  box-shadow: 0 0 20px #00ff00;
+}
+
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>🚀 SpaceNinja's Projects ©</h1>
-    <button class="toggle-theme-btn" onclick="toggleTheme()">🌗 Toggle Dark Mode</button>
+    <h1>🚀 <span style="text-shadow: 0 0 8px #00ff00;">SpaceNinja's Projects ©</span></h1>
+    <div>
+      <button class="toggle-theme-btn" onclick="toggleTheme()">🌗 Toggle Dark Mode</button>
+      <button class="toggle-theme-btn" onclick="toggleClassicUI()">🕹️ Toggle Old UI</button>
+    </div>
 
     <div class="projects-list">
-      <div class="project-card">
-        <div class="project-title">Pong Game</div>
-        <div class="project-desc">A retro Pong arcade game rebuilt in JavaScript. Challenge the AI!</div>
-        <a href="Ping_Pong/Code/Index.html" class="fancy-btn" target="_blank">Play Now</a>
-      </div>
+<div class="project-card">
+  <div class="project-title">Pong Game</div>
+  <div class="project-desc">A retro Pong arcade game rebuilt in JavaScript. Challenge the AI!</div>
+  <a href="Ping_Pong/Code/Index.html" class="fancy-btn" target="_blank">Play Now</a>
+</div>
 
-      <div class="project-card">
-        <div class="project-title">Mine-Sweeper</div>
-        <div class="project-desc">An old OS game rebuilt in JavaScript!</div>
-        <a href="Minesweeper/Index.html" class="fancy-btn" target="_blank">Play Now</a>
-      </div>
+<div class="project-card">
+  <div class="project-title">Mine-Sweeper</div>
+  <div class="project-desc">An old OS game rebuilt in JavaScript!</div>
+  <a href="Minesweeper/Index.html" class="fancy-btn" target="_blank">Play Now</a>
+</div>
 
-      <div class="project-card">
-        <div class="project-title">Asteroids</div>
-        <div class="project-desc">A classic game rebuilt in JavaScript!</div>
-        <a href="Asteroids/index.html" class="fancy-btn" target="_blank">Play Now</a>
-      </div>
+<div class="project-card">
+  <div class="project-title">Asteroids</div>
+  <div class="project-desc">A classic game rebuilt in JavaScript!</div>
+  <a href="Asteroids/index.html" class="fancy-btn" target="_blank">Play Now</a>
+</div>
 
-      <div class="project-card">
-        <div class="project-title">Snake (Beta)</div>
-        <div class="project-desc">A snake game rebuilt in JavaScript!</div>
-        <a href="Snake/index.html" class="fancy-btn" target="_blank">Play Now</a>
-      </div>
-    </div>
+<div class="project-card">
+  <div class="project-title">Snake (Beta)</div>
+  <div class="project-desc">A snake game rebuilt in JavaScript!</div>
+  <a href="Snake/index.html" class="fancy-btn" target="_blank">Play Now</a>
+</div>
+<div class="project-card">
+  <div class="project-title">Old UI Memorial</div>
+  <div class="project-desc">A tribute to the classic user interface before the redesign.</div>
+  <a href="Photos/Photos/index.html" class="fancy-btn">View Memorial</a>
+</div>
 
-    <div style="text-align:center; margin:2em 0;">
-      <a href="https://github.com/SpaceNinja-007/Space_Projects/issues/new?template=bug_report.md" target="_blank" rel="noopener" class="bug-report-btn">🐞 Report a Bug</a>
-      <a href="https://github.com/SpaceNinja-007/Space_Projects/issues/new?template=feature_request.md" target="_blank" rel="noopener" class="feature-request-btn">🚀 Suggest a Feature</a>
-    </div>
   </div>
 
-<script>
-  // 🌗 Toggle theme and save preference
-  function toggleTheme() {
-    document.body.classList.toggle('dark-mode');
-    const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-    localStorage.setItem('theme', theme);
-  }
-
-  // 💾 Load saved theme on page load
-  window.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      document.body.classList.add('dark-mode');
+  <script>
+    function toggleClassicUI() {
+      document.body.classList.toggle('classic-ui');
+      if (document.body.classList.contains('classic-ui')) {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
     }
-  });
 
-  // 🕹️ Konami Code Easter Egg
-  const secretCode = [
-    "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
-    "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight",
-    "b", "a"
-  ];
-  let input = [];
-
-  window.addEventListener('keydown', e => {
-    input.push(e.key);
-    if (input.length > secretCode.length) input.shift();
-    if (input.join('') === secretCode.join('')) {
-      alert("👾 You found the Easter egg!");
-      input = [];
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+      localStorage.setItem('theme', theme);
     }
-  });
-</script>
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+      }
+    });
+
+    const secretCode = [
+      "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
+      "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight",
+      "b", "a"
+    ];
+    let input = [];
+
+    window.addEventListener('keydown', e => {
+      input.push(e.key);
+      if (input.length > secretCode.length) input.shift();
+      if (input.join('') === secretCode.join('')) {
+        alert("👾 Classic UI activated!");
+        document.body.classList.toggle('classic-ui');
+        input = [];
+      }
+    });
+  </script>
 </body>
+
 </html>

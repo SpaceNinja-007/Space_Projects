@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Old UI Memorial</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      padding: 40px;
+      transition: background 0.5s ease;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 1.2em;
+      color: #aaa;
+      margin-bottom: 20px;
+    }
+
+    .screenshot-frame {
+      border: 4px solid #00ffff;
+      padding: 10px;
+      background-color: #000;
+      box-shadow: 0 0 20px rgba(0,255,255,0.3);
+      margin-bottom: 20px;
+    }
+
+    .screenshot-frame img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .caption {
+      font-style: italic;
+      color: #ccc;
+      margin-bottom: 30px;
+    }
+
+    #easterEggBtn {
+      background-color: #ff0055;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #easterEggBtn:hover {
+      background-color: #ff3366;
+    }
+
+    .rickroll {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      max-width: 80vw;
+      max-height: 80vh;
+      box-shadow: 0 0 40px #ff0055;
+    }
+
+    @media (max-width: 600px) {
+      .rickroll {
+        max-width: 90vw;
+        max-height: 60vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🕹️ My site UI: Before the Push</h1>
+    <p class="subtitle">A tribute to the interface that once was.</p>
+    <div class="screenshot-frame">
+      <img src="assets/photo1.png" alt="Old UI Screenshot">
+    </div>
+    <p class="caption">Captured moments before the redesign. Forever in our hearts.</p>
+    <button id="easterEggBtn" aria-label="Do Not Click (Easter Egg)">Do Not Click</button>
+  </div>
+
+  <script>
+    let rickRolled = false;
+
+    document.getElementById("easterEggBtn").addEventListener("click", () => {
+      if (rickRolled) return;
+      rickRolled = true;
+
+      alert("You were warned...");
+
+      // Step 1: Space cat background
+      document.body.style.backgroundImage = "url('https://media.tenor.com/2roX3uxz_68AAAAC/cat-space.gif')";
+      document.body.style.backgroundSize = "cover";
+      document.body.style.color = "#00ffcc";
+
+      document.querySelector("h1").textContent = "🐱‍👤 UI Catstronaut Activated";
+      document.querySelector(".caption").textContent = "This is what happens when you mess with legacy code.";
+
+      // Step 2: After 6 seconds, show Rickroll GIF
+      setTimeout(() => {
+        const rickGif = document.createElement("img");
+        rickGif.src = "https://media.tenor.com/Vz2zHkz6zZMAAAAC/rickroll-rick-astley.gif";
+        rickGif.alt = "Rick Astley Rickroll";
+        rickGif.classList.add("rickroll");
+        document.body.appendChild(rickGif);
+      }, 6000);
+    });
+  </script>
+</body>
+</html>
