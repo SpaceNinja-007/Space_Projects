@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>SpaceNinja's Projects</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/png" href="Ping_Pong/Code/Assets/Ninjastar.png">
+  <link rel="icon" type="image/png" href="Trollface.png">
   <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -183,46 +183,64 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🚀 <span style="text-shadow: 0 0 8px #00ff00;">SpaceNinja's Projects ©</span></h1>
-    <div>
-      <button class="toggle-theme-btn" onclick="toggleTheme()">🌗 Toggle Dark Mode</button>
-      <button class="toggle-theme-btn" onclick="toggleClassicUI()">🕹️ Toggle Console UI</button>
+<div class="container">
+  <h1>🚀 <span style="text-shadow: 0 0 8px #ff0000;">SpaceNinja's Projects ©</span></h1>
+  <div>
+    <button class="toggle-theme-btn" onclick="toggleTheme()">🌗 Toggle Dark Mode</button>
+    <button class="toggle-theme-btn" onclick="toggleClassicUI()">🕹️ Toggle Console UI</button>
+  </div>
+
+  <div class="projects-list">
+    <!-- Project Cards -->
+    <div class="project-card">
+      <div class="project-title">Pong Game</div>
+      <div class="project-desc">A retro Pong arcade game rebuilt in JavaScript. Challenge the AI!</div>
+      <a href="Ping_Pong/Code/Index.html" class="fancy-btn" target="_blank">Play Now</a>
     </div>
 
-    <div class="projects-list">
-      <!-- Project Cards -->
-      <div class="project-card">
-        <div class="project-title">Pong Game</div>
-        <div class="project-desc">A retro Pong arcade game rebuilt in JavaScript. Challenge the AI!</div>
-        <a href="Ping_Pong/Code/Index.html" class="fancy-btn" target="_blank">Play Now</a>
-      </div>
+    <div class="project-card">
+      <div class="project-title">Mine-Sweeper</div>
+      <div class="project-desc">An old OS game rebuilt in JavaScript!</div>
+      <a href="Minesweeper/Index.html" class="fancy-btn" target="_blank">Play Now</a>
+    </div>
 
-      <div class="project-card">
-        <div class="project-title">Mine-Sweeper</div>
-        <div class="project-desc">An old OS game rebuilt in JavaScript!</div>
-        <a href="Minesweeper/Index.html" class="fancy-btn" target="_blank">Play Now</a>
-      </div>
+    <div class="project-card">
+      <div class="project-title">Asteroids</div>
+      <div class="project-desc">A classic game rebuilt in JavaScript!</div>
+      <a href="Asteroids/index.html" class="fancy-btn" target="_blank">Play Now</a>
+    </div>
 
-      <div class="project-card">
-        <div class="project-title">Asteroids</div>
-        <div class="project-desc">A classic game rebuilt in JavaScript!</div>
-        <a href="Asteroids/index.html" class="fancy-btn" target="_blank">Play Now</a>
-      </div>
+    <div class="project-card">
+      <div class="project-title">Snake (Beta)</div>
+      <div class="project-desc">A snake game rebuilt in JavaScript!</div>
+      <a href="Snake/index.html" class="fancy-btn" target="_blank">Play Now</a>
+    </div>
 
-      <div class="project-card">
-        <div class="project-title">Snake (Beta)</div>
-        <div class="project-desc">A snake game rebuilt in JavaScript!</div>
-        <a href="Snake/index.html" class="fancy-btn" target="_blank">Play Now</a>
-      </div>
+    <div class="project-card">
+      <div class="project-title">Old UI Memorial</div>
+      <div class="project-desc">A tribute to the classic user interface before the redesign.</div>
+      <a href="Photos/Photos/index.html" class="fancy-btn">View Memorial</a>
+    </div>
 
-      <div class="project-card">
-        <div class="project-title">Old UI Memorial</div>
-        <div class="project-desc">A tribute to the classic user interface before the redesign.</div>
-        <a href="Photos/Photos/index.html" class="fancy-btn">View Memorial</a>
-      </div>
+    <div class="project-card">
+      <div class="project-title">Discussions</div>
+      <div class="project-desc">Talk then wait then talk</div>
+      <a href="https://github.com/SpaceNinja-007/Space_Projects/discussions" class="fancy-btn">Talk</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-title">Neal Fun</div>
+      <div class="project-desc">Another fun site</div>
+      <a href="https://neal.fun" class="fancy-btn" target="_blank">Try</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-title">Just for Fun</div>
+      <div class="project-desc">Play them if you want</div>
+      <a href="https://justforfun.io/" class="fancy-btn" target="_blank">Talk</a>
     </div>
   </div>
+</div>
 
   <script>
     function toggleTheme() {
