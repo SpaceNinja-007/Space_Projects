@@ -271,6 +271,7 @@
             }
         });
 
+<<<<<<< HEAD
         // Konami Code Easter Egg
         const secretCode = [
             "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
@@ -279,5 +280,69 @@
         ];
         let input = [];
     </script>
+=======
+<!-- Project Cards -->
+<div class="project-card">
+  <div class="project-title">Neal Fun</div>
+  <div class="project-desc">Another fun site</div>
+  <a href="https://neal.fun" class="fancy-btn" target="_blank">Try</a>
+</div>
+
+<div class="project-card">
+  <div class="project-title">Just for Fun</div>
+  <div class="project-desc">Play them if you want</div>
+  <a href="https://justforfun.io/" class="fancy-btn" target="_blank">Play</a>
+</div>
+</div> <!-- closes .projects-list -->
+</div> <!-- closes .container -->
+
+<script>
+  function toggleTheme() {
+    document.body.classList.toggle('dark-mode');
+    const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+    localStorage.setItem('theme', theme);
+  }
+
+  function toggleClassicUI() {
+    document.body.classList.toggle('classic-ui');
+    if (document.body.classList.contains('classic-ui')) {
+      localStorage.setItem('uiMode', 'classic');
+    } else {
+      localStorage.removeItem('uiMode');
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    const savedUI = localStorage.getItem('uiMode');
+
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark-mode');
+    }
+
+    if (savedUI === 'classic') {
+      document.body.classList.add('classic-ui');
+    }
+  });
+
+  // Konami Code Easter Egg
+  const secretCode = [
+    "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
+    "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight",
+    "b", "a"
+  ];
+  let input = [];
+
+  window.addEventListener('keydown', e => {
+    input.push(e.key);
+    if (input.length > secretCode.length) input.shift();
+    if (input.join('') === secretCode.join('')) {
+      alert("👾 Classic UI activated!");
+      document.body.classList.toggle('classic-ui');
+      input = [];
+    }
+  });
+</script>
+
 </body>
 </html>
