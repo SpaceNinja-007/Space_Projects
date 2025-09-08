@@ -72,6 +72,18 @@
             transition: background 0.3s;
         }
 
+        .mode-toggle {
+            margin: 1em 0.5em 0;
+            padding: 0.5em 1em;
+            border: none;
+            border-radius: 8px;
+            background: #444;
+            color: #bd4242;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
         .toggle-theme-btn:hover {
             background: #666;
         }
@@ -182,6 +194,20 @@
             color: #000 !important;
             box-shadow: 0 0 20px #00ff00;
         }
+
+        #cursor-toggle {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+          background-color: #222;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        z-index: 9999;
+        }
+
     </style>
 </head>
 <body>
@@ -190,7 +216,11 @@
         <div>
             <button class="toggle-theme-btn" onclick="toggleTheme()">🌗 Toggle Dark Mode</button>
             <button class="toggle-theme-btn" onclick="toggleClassicUI()">🕹️ Toggle Console UI</button>
+            <button id="cursor-toggle">Switch Cursor</button>
+
+
         </div>
+
         <div class="projects-list">
             <!-- Your original project cards -->
             <div class="project-card">
@@ -343,6 +373,52 @@
     }
   });
 </script>
+<script src="https://unpkg.com/cursor-effects@latest/dist/browser.js"></script>
+<script>
+  const cursorToggleBtn = document.getElementById("cursor-toggle");
+
+  // List of available cursor effects
+const cursorTypes = [
+  "emojiCursor",
+  "springyEmojiCursor",
+  "ghostCursor",
+  "trailingCursor",
+  "textFlagCursor",
+  "followingDotCursor",
+  "bubbleCursor",
+  "snowflakeCursor",
+  "fairyDustCursor",
+  "clockCursor",
+  "characterCursor"
+];
+
+
+  let currentIndex = 0;
+  let activeCursor = null;
+
+  function activateCursor(type) {
+    // Destroy previous effect if exists
+    if (activeCursor && typeof activeCursor.destroy === "function") {
+      activeCursor.destroy();
+    }
+
+    // Create new effect
+    activeCursor = new cursoreffects[type]();
+    cursorToggleBtn.textContent = `Switch Cursor (${type})`;
+  }
+
+  // Initial load
+  window.addEventListener("load", () => {
+    activateCursor(cursorTypes[currentIndex]);
+  });
+
+  // On button click, switch to next effect
+  cursorToggleBtn.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % cursorTypes.length;
+    activateCursor(cursorTypes[currentIndex]);
+  });
+</script>
+
 
 </body>
 </html>
