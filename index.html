@@ -310,21 +310,6 @@
         ];
         let input = [];
     </script>
-=======
-<!-- Project Cards -->
-<div class="project-card">
-  <div class="project-title">Neal Fun</div>
-  <div class="project-desc">Another fun site</div>
-  <a href="https://neal.fun" class="fancy-btn" target="_blank">Try</a>
-</div>
-
-<div class="project-card">
-  <div class="project-title">Just for Fun</div>
-  <div class="project-desc">Play them if you want</div>
-  <a href="https://justforfun.io/" class="fancy-btn" target="_blank">Play</a>
-</div>
-</div> <!-- closes .projects-list -->
-</div> <!-- closes .container -->
 
 <script>
   function toggleTheme() {
@@ -376,7 +361,11 @@
 <script src="https://unpkg.com/cursor-effects@latest/dist/browser.js"></script>
 <script>
   const cursorToggleBtn = document.getElementById("cursor-toggle");
-
+new cursoreffects.rainbowCursor({
+  length: 3,
+  colors: ["red", "blue" "green"],
+  size: 4,
+});
   // List of available cursor effects
 const cursorTypes = [
   "emojiCursor",
@@ -390,6 +379,7 @@ const cursorTypes = [
   "fairyDustCursor",
   "clockCursor",
   "characterCursor"
+  "textcursor"
 ];
 
 
