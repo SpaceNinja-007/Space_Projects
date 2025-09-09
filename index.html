@@ -368,7 +368,7 @@
     "springyEmojiCursor",
     "ghostCursor",
     "trailingCursor",
-    "textFlagCursor",
+    "textFlag",
     "followingDotCursor",
     "bubbleCursor",
     "snowflakeCursor",
@@ -391,12 +391,13 @@
     if (type === "rainbowCursor") {
       activeCursor = new cursoreffects.rainbowCursor({
         length: 3,
-        colors: ["red", "blue", "green"], // ✅ fixed missing comma
+        colors: ["yellow", "blue", "green"], // ✅ fixed missing comma
         size: 4
       });
     } else {
       activeCursor = new cursoreffects[type]();
     }
+    new textFlag({ text: "test", color: ["#FF6800"] });
 
     cursorToggleBtn.textContent = `Switch Cursor (${type})`;
   }
