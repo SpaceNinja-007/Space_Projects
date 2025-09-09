@@ -361,28 +361,22 @@
 <script src="https://unpkg.com/cursor-effects@latest/dist/browser.js"></script>
 <script>
   const cursorToggleBtn = document.getElementById("cursor-toggle");
-new cursoreffects.rainbowCursor({
-  length: 3,
-  colors: ["red", "blue" "green"],
-  size: 4,
-});
-  // List of available cursor effects
-const cursorTypes = [
-  "emojiCursor",
-  "springyEmojiCursor",
-  "ghostCursor",
-  "trailingCursor",
-  "textFlagCursor",
-  "followingDotCursor",
-  "bubbleCursor",
-  "snowflakeCursor",
-  "fairyDustCursor",
-  "clockCursor",
-  "characterCursor"
-  "textflag"
-  "rainbowcursor"
-];
 
+  // List of available cursor effects (case-sensitive!)
+  const cursorTypes = [
+    "emojiCursor",
+    "springyEmojiCursor",
+    "ghostCursor",
+    "trailingCursor",
+    "textFlagCursor",
+    "followingDotCursor",
+    "bubbleCursor",
+    "snowflakeCursor",
+    "fairyDustCursor",
+    "clockCursor",
+    "characterCursor",
+    "rainbowCursor"
+  ];
 
   let currentIndex = 0;
   let activeCursor = null;
@@ -393,8 +387,17 @@ const cursorTypes = [
       activeCursor.destroy();
     }
 
-    // Create new effect
-    activeCursor = new cursoreffects[type]();
+    // Special config for rainbowCursor
+    if (type === "rainbowCursor") {
+      activeCursor = new cursoreffects.rainbowCursor({
+        length: 3,
+        colors: ["red", "blue", "green"], // ✅ fixed missing comma
+        size: 4
+      });
+    } else {
+      activeCursor = new cursoreffects[type]();
+    }
+
     cursorToggleBtn.textContent = `Switch Cursor (${type})`;
   }
 
@@ -409,6 +412,7 @@ const cursorTypes = [
     activateCursor(cursorTypes[currentIndex]);
   });
 </script>
+
 
 
 </body>
