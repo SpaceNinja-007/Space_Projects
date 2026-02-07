@@ -3,9 +3,15 @@ These are games made in HTML, JavaScript, and CSS.
 
 And are free!
 
-⚠️ `apex.txt` is a 0-byte artifact. It represents digital minimalism. Do not modify.
+~~⚠️ `apex.txt` is a 0-byte artifact. It represents digital minimalism. Do not modify.~~
 
-Also the Test_websites or other ones are dead and I don't use them (and don't know how to get rid of them!)
+Ew gross AI README I hate those lets fix it:
+
+DO NOT EVEN TRY TO EDIT `apex.txt`
+
+Ahh much better
+
+Also the Test_websites or other ones are dead and I don't use them (and I don't know how to get rid of them!)
 
 If you are going to add or update code please make an pull request!
 
@@ -15,4 +21,8 @@ Notes: 1.The code is under the MIT license.
 [Website](https://spaceninja-007.github.io/Space_Projects/)
 
 [Wiki](https://github.com/SpaceNinja-007/Space_Projects/wiki)
+
+---
+
+PS: I am removing all AI
 
